@@ -9,15 +9,7 @@ import logging
 from pathvalidate import ValidationError, validate_filepath, validate_filename
 
 # Use External Library that allows ANSI color in the output
-# I know this is silly, but I like it so it stays.
 from colorama import just_fix_windows_console, Fore, Style
-
-# Pattern I don't like, but may want to use later in other projects so saved here.
-# try:
-#     from pathvalidate import ValidationError, validate_filepath, validate_filename
-# except ImportError as ie:
-#     os.system("pip install pathvalidate")
-#     from pathvalidate import ValidationError, validate_filepath, validate_filename
 
 # Start Fixes for Console ANSI color support. (Not just windows.)
 just_fix_windows_console()
@@ -106,13 +98,13 @@ def save_file(path:str, file_name:str, data:str, auto_create_dir:bool = True) ->
         logger.debug('All is well. Returning True.')
         return True
 
-    except ValueError as ve:
-        logger.exception(str(ve))
-        print(f"ValueError:\n {ve}")
-
     except ValidationError as ve:
         logger.exception(str(ve))
         print(f"ValidationError:\n {ve}")
+
+    except ValueError as ve:
+        logger.exception(str(ve))
+        print(f"ValueError:\n {ve}")
 
     except FileNotFoundError as fnf:
         logger.exception(str(fnf))
@@ -132,16 +124,6 @@ def save_file(path:str, file_name:str, data:str, auto_create_dir:bool = True) ->
 
     return False
 
-if __name__ == "__main__":
-    done = True
-    # import pytest
-    # pytest.main([__file__])
-
-    # Sample Execution
-    # import json
-    # save_path = ".\\temp"
-    # new_file_name = "test_file.json"
-    # data_json = json.dumps({
-    #     "cats": ['blue', 'tabby', 'orange']
-    # })
-    # save_file(path=save_path, file_name=new_file_name, data=data_json)
+# Once Unit Test are created this will be activated.
+# if __name__ == "__main__":
+#     pytest.main([__file__])
